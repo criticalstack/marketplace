@@ -1,0 +1,277 @@
+
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.4.0
+  creationTimestamp: null
+  name: applications.marketplace.criticalstack.com
+spec:
+  group: marketplace.criticalstack.com
+  names:
+    kind: Application
+    listKind: ApplicationList
+    plural: applications
+    shortNames:
+    - app
+    - apps
+    singular: application
+  scope: Cluster
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              app_name:
+                type: string
+              author:
+                type: string
+              categories:
+                items:
+                  type: string
+                type: array
+              deprecated:
+                type: boolean
+              description:
+                type: string
+              documents:
+                additionalProperties:
+                  type: string
+                type: object
+              icon:
+                type: string
+              license:
+                type: string
+              proper_name:
+                description: ProperName is the stylized name, i.e. "MySQL"
+                type: string
+              source_name:
+                type: string
+              url:
+                type: string
+              version:
+                type: string
+              website:
+                type: string
+            required:
+            - app_name
+            - author
+            - categories
+            - description
+            - icon
+            - license
+            - source_name
+            - url
+            - version
+            - website
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: false
+  - additionalPrinterColumns:
+    - description: Chart Source
+      jsonPath: .metadata.ownerReferences[0].name
+      name: Source
+      type: string
+    - description: Name of chart
+      jsonPath: .appName
+      name: Chart Name
+      type: string
+    - description: Latest Version
+      jsonPath: .versions[0].version
+      name: Version
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1alpha2
+    schema:
+      openAPIV3Schema:
+        description: Application is the Schema for the applications API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          appName:
+            description: The actual application name
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          versions:
+            items:
+              properties:
+                annotations:
+                  additionalProperties:
+                    type: string
+                  description: Annotations are additional mappings uninterpreted by
+                    Helm, made available for inspection by other applications.
+                  type: object
+                apiVersion:
+                  description: The API Version of this chart.
+                  type: string
+                appVersion:
+                  description: The version of the application enclosed inside of this
+                    chart.
+                  type: string
+                created:
+                  format: date-time
+                  type: string
+                dependencies:
+                  description: Dependencies are a list of dependencies for a chart.
+                  items:
+                    description: "Dependency describes a chart upon which another
+                      chart depends. \n Dependencies can be used to express developer
+                      intent, or to capture the state of a chart."
+                    properties:
+                      alias:
+                        description: Alias usable alias to be used for the chart
+                        type: string
+                      condition:
+                        description: A yaml path that resolves to a boolean, used
+                          for enabling/disabling charts (e.g. subchart1.enabled )
+                        type: string
+                      enabled:
+                        description: Enabled bool determines if chart should be loaded
+                        type: boolean
+                      import-values:
+                        description: ImportValues holds the mapping of source values
+                          to parent key to be imported
+                        items:
+                          type: string
+                        type: array
+                      name:
+                        description: Name is the name of the dependency.
+                        type: string
+                      repository:
+                        description: The URL to the repository.
+                        type: string
+                      tags:
+                        description: Tags can be used to group charts for enabling/disabling
+                          together
+                        items:
+                          type: string
+                        type: array
+                      version:
+                        description: Version is the version (range) of this chart.
+                        type: string
+                    required:
+                    - name
+                    - repository
+                    type: object
+                  type: array
+                deprecated:
+                  description: Whether or not this chart is deprecated
+                  type: boolean
+                description:
+                  description: A one-sentence description of the chart
+                  type: string
+                digest:
+                  type: string
+                documents:
+                  additionalProperties:
+                    type: string
+                  description: Extra application documents for display in the marketplace.
+                    Map of title to string content.
+                  type: object
+                home:
+                  description: The URL to a relevant project page, git repo, or contact
+                    person
+                  type: string
+                icon:
+                  description: The URL to an icon file.
+                  type: string
+                keywords:
+                  description: A list of string keywords
+                  items:
+                    type: string
+                  type: array
+                kubeVersion:
+                  description: KubeVersion is a SemVer constraint specifying the version
+                    of Kubernetes required.
+                  type: string
+                maintainers:
+                  description: A list of name and URL/email address combinations for
+                    the maintainer(s)
+                  items:
+                    description: Maintainer describes a Chart maintainer.
+                    properties:
+                      email:
+                        description: Email is an optional email address to contact
+                          the named maintainer
+                        type: string
+                      name:
+                        description: Name is a user name or organization name
+                        type: string
+                      url:
+                        description: URL is an optional URL to an address for the
+                          named maintainer
+                        type: string
+                    type: object
+                  type: array
+                removed:
+                  type: boolean
+                schema:
+                  description: Override chart values schema
+                  format: byte
+                  type: string
+                sources:
+                  description: Source is the URL to the source code of this chart
+                  items:
+                    type: string
+                  type: array
+                type:
+                  description: 'Specifies the chart type: application or library'
+                  enum:
+                  - application
+                  - library
+                  type: string
+                urls:
+                  items:
+                    type: string
+                  minItems: 1
+                  type: array
+                version:
+                  description: A SemVer 2 conformant version string of the chart
+                  type: string
+              required:
+              - urls
+              type: object
+            minItems: 1
+            type: array
+        required:
+        - appName
+        - versions
+        type: object
+    served: true
+    storage: true
+    subresources: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

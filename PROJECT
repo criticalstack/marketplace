@@ -1,0 +1,13 @@
+domain: criticalstack.com
+repo: github.com/criticalstack/marketplace
+resources:
+- group: marketplace
+  kind: Source
+  version: v1alpha2
+- group: marketplace
+  kind: Application
+  version: v1alpha2
+- group: marketplace
+  kind: Release
+  version: v1alpha2
+version: "2"

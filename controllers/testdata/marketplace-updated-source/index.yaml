@@ -1,0 +1,38 @@
+apiVersion: v1
+entries:
+  busybox:
+  - apiVersion: v2
+    appVersion: "1.31.1"
+    created: "2020-01-27T11:14:58.53741371-05:00"
+    description: Test chart - busybox
+    home: criticalstack.com
+    icon: http://github.com/criticalstack.png
+    keywords:
+    - busy
+    - box
+    maintainers:
+    - email: dev@criticalstack.com
+      name: Critical Stack
+    name: busybox
+    urls:
+    - /busybox-1.0.0.tgz
+    version: 2.1.0
+  otherthing:
+  - apiVersion: v1
+    appVersion: 1.0.0
+    created: "2020-01-27T11:14:58.53741371-05:00"
+    deprecated: true
+    description: test deprecated app
+    home: https://www.somewhere.com/
+    keywords:
+    - bad
+    maintainers:
+    - email: nobody@yahoo.com
+      name: no body
+    name: otherthing
+    sources:
+    - https://github.com
+    urls:
+    - /otherthing.tgz
+    version: 1.0.10
+generated: "2020-01-27T11:14:58.532696364-05:00"

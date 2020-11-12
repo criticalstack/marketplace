@@ -1,0 +1,45 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: manager-role
+rules:
+- apiGroups:
+  - marketplace.criticalstack.com
+  resources:
+  - releases
+  - sources
+  - applications
+  verbs:
+  - "*"
+- apiGroups:
+  - marketplace.criticalstack.com
+  resources:
+  - releases/status
+  - sources/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  - configmaps
+  verbs:
+  - get
+  - list
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: marketplace-manager
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: marketplace-manager
+subjects:
+- kind: ServiceAccount
+  name: manager
+  namespace: marketplace-system

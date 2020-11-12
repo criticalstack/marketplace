@@ -1,0 +1,32 @@
+name: Build and test marketplace controllers
+
+on:
+  push: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Install golang
+      uses: actions/setup-go@v2
+      with:
+        go-version: '^1.14.9' # The Go version to download (if necessary) and use.
+
+    - name: Go cache
+      uses: actions/cache@v2
+      with:
+        path: ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
+
+    - name: Build
+      run: make build
+
+    - name: Test
+      run: make test
